@@ -34,10 +34,17 @@ Asegúrate de tener instalado lo siguiente antes de continuar:
    ```
 
 3. Prueba la Aplicación:
+   Una vez que la aplicación se haya desplegado, puedes consumir un endpoint GET para obtener datos de ejemplo. La URL del endpoint será proporcionada en la salida del comando sam deploy. la url de la applicacion desplegada es :
+   https://p7u9c58q84.execute-api.us-east-1.amazonaws.com/Prod/customers?name=a
+   \
+    También puedes realizar pruebas locales usando SAM CLI:
 
    ```bash
    sam local start-api
    ```
+
+   En la siguiente url:
+   http://127.0.0.1:3000/customers?name=a
 
 ## Mantenimiento
 
