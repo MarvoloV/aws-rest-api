@@ -1,36 +1,20 @@
 import axios from 'axios';
 import { CustomersRepository } from './CustomersRepository';
 import { Customer } from '../domain/Customer';
-
-type RandomUser = {
-  id: {
-    value: string;
-  };
-  name: {
-    first: string;
-
-    last: string;
-  };
-};
+import { customerAdapter } from '../adapter/CustomerAdapter';
+import { RandomUserResponse, ResultUsers } from '../domain/RandomUserResponse';
 
 export class CustomersRepositoryImpl implements CustomersRepository {
   async findByFilter(customer: Customer): Promise<Customer[]> {
-    const result = await axios.get('https://randomuser.me/api/?results=100');
-    if (!result.data.results) {
+    const response = await axios.get<RandomUserResponse>(
+      'https://randomuser.me/api/?results=100'
+    );
+    if (!response.data.results) {
       return [];
     }
-
-    return result.data.results
-      .filter((item: RandomUser) =>
-        item.name.first.toLowerCase().startsWith(customer.name.toLowerCase())
-      )
-      .map(
-        (item: RandomUser) =>
-          new Customer({
-            id: item.id.value,
-            name: item.name.first,
-            lastName: item.name.last,
-          })
-      );
+    const filterUsers = response.data.results.filter((item: ResultUsers) =>
+      item.name.first.toLowerCase().startsWith(customer.name.toLowerCase())
+    );
+    return customerAdapter(filterUsers);
   }
 }
