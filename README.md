@@ -24,6 +24,7 @@ Asegúrate de tener instalado lo siguiente antes de continuar:
 1. Compila la Aplicación:
 
    ```bash
+   npm run build
    sam build
    ```
 
