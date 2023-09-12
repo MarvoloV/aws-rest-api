@@ -40,5 +40,31 @@ describe('CustomersController', () => {
         name: 'A',
       });
     });
+    it('should return badRequest', async () => {
+      // Prepare
+      const service = {
+        findByFilter: jest.fn(() =>
+          Promise.resolve([
+            {
+              statusCode: 400,
+              isBase64Encoded: false,
+            },
+          ])
+        ),
+      } as unknown as CustomersService;
+
+      const controller = new CustomersController(service);
+      // Execute
+      const response = await controller.findByFilter({
+        httpMethod: 'GET',
+        resource: '/customers',
+      } as unknown as APIGatewayProxyEvent);
+
+      // Validate
+      expect(response).toEqual({
+        statusCode: 400,
+        isBase64Encoded: false,
+      });
+    });
   });
 });
