@@ -97,5 +97,25 @@ describe('CustomersRepositoryImpl', () => {
         },
       ]);
     });
+    it('should return array empty', async () => {
+      // Prepare
+      const repository = new CustomersRepositoryImpl();
+
+      mockedAxios.get.mockImplementationOnce(() =>
+        Promise.resolve({
+          data: {},
+        })
+      );
+
+      // Execute
+      const response = await repository.findByFilter(
+        new Customer({
+          name: 'B',
+        })
+      );
+
+      // Validate
+      expect(response).toEqual([]);
+    });
   });
 });
