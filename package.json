@@ -13,6 +13,9 @@
     "axios": "^0.24.0",
     "source-map-support": "^0.5.21"
   },
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "@tsconfig/node12": "^1.0.9",
     "@types/aws-lambda": "^8.10.86",

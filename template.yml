@@ -3,15 +3,17 @@ Description: >-
   interview-backend-nodejs
 
 Transform:
-- AWS::Serverless-2016-10-31
-
+  - AWS::Serverless-2016-10-31
+Parameters:
+  IdentityNameParameter:
+    Type: String
+    Default: 'xyz'
 Resources:
-
   CustomersLambda:
     Type: AWS::Serverless::Function
     Properties:
       Handler: dist/handlers/customers.customersHandler
-      Runtime: nodejs12.x
+      Runtime: nodejs18.x
       MemorySize: 128
       Timeout: 100
       Description: Customers
@@ -23,3 +25,6 @@ Resources:
             Method: GET
 
 Outputs:
+  WebEndpoint:
+    Description: 'API Gateway endpoint URL for Prod stage'
+    Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/'
